@@ -9,10 +9,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 
+
 public class Main {
     private static BL bl = new BL(); // Eliminamos 'final' si no es necesario
 
+    private static JFrame LoginFrame;
+    private static JFrame MainFrame;
+
+
     public static void main(String[] args) {
+        // Crear el marco de inicio de sesión
+        Login();
+
+    }
+
+    public static void MainFrame() {
         JFrame frame = new JFrame("Sistema de Tiquetes");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 400);
@@ -95,5 +106,33 @@ public class Main {
         for (JTextField campo : campos) {
             campo.setText("");
         }
+    }
+
+    private static void Login() {
+        LoginFrame = new JFrame("Login");
+        LoginFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        LoginFrame.setSize(300, 100);
+        LoginFrame.setLayout(new GridLayout(0, 2));
+
+        // Campos de entrada
+        JTextField usuario = new JTextField();
+        JTextField contrasena = new JTextField();
+
+        JButton loginButton = new JButton("Login");
+
+        LoginFrame.add(new JLabel("Usuario"));
+        LoginFrame.add(usuario);
+
+        LoginFrame.add(new JLabel("Contraseña"));
+        LoginFrame.add(contrasena);
+
+        loginButton.addActionListener(e -> {
+            LoginFrame.setVisible(false);
+            MainFrame();
+        });
+
+        LoginFrame.add(loginButton);
+
+        LoginFrame.setVisible(true);
     }
 }
