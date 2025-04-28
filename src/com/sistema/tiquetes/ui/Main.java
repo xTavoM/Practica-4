@@ -8,15 +8,14 @@ import com.sistema.tiquetes.model.Tecnico;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Main {
-    private static BL bl = new BL();
+    private static BL bl = new BL(); // Eliminamos 'final' si no es necesario
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Sistema de Tiquetes");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 300);
+        frame.setSize(400, 400);
         frame.setLayout(new GridLayout(0, 2));
 
         // Campos de entrada
@@ -34,8 +33,10 @@ public class Main {
         JButton agregarCreadorButton = new JButton("Agregar Creador");
         JButton agregarTecnicoButton = new JButton("Agregar Técnico");
         JButton agregarAdminButton = new JButton("Agregar Administrador");
+        JButton modificarUsuarioButton = new JButton("Modificar Usuario");
+        JButton eliminarUsuarioButton = new JButton("Eliminar Usuario");
 
-        // Agregar componentes al frame
+        // Agregar componentes al marco
         frame.add(new JLabel("Código:"));
         frame.add(codigoField);
         frame.add(new JLabel("Nombre:"));
@@ -57,36 +58,42 @@ public class Main {
         frame.add(agregarCreadorButton);
         frame.add(agregarTecnicoButton);
         frame.add(agregarAdminButton);
+        frame.add(modificarUsuarioButton);
+        frame.add(eliminarUsuarioButton);
 
         // Acción para agregar Creador
-        agregarCreadorButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Creador creador = new Creador(codigoField.getText(), nombreField.getText(), primerApellidoField.getText(), segundoApellidoField.getText(), correoField.getText(), telefonoField.getText(), passwordField.getText(), departamentoField.getText());
-                bl.agregarCreador(creador);
-                JOptionPane.showMessageDialog(frame, "Creador agregado exitosamente!");
-            }
+        agregarCreadorButton.addActionListener(e -> {
+            Creador creador = new Creador(codigoField.getText(), nombreField.getText(), primerApellidoField.getText(), segundoApellidoField.getText(), correoField.getText(), telefonoField.getText(), passwordField.getText(), departamentoField.getText());
+            bl.agregarCreador(creador);
+            JOptionPane.showMessageDialog(frame, "Creador agregado exitosamente!");
+            limpiarCampos(codigoField, nombreField, primerApellidoField, segundoApellidoField, correoField, telefonoField, passwordField, departamentoField, rolField);
         });
 
         // Acción para agregar Técnico
-        agregarTecnicoButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Tecnico tecnico = new Tecnico(codigoField.getText(), nombreField.getText(), primerApellidoField.getText(), segundoApellidoField.getText(), correoField.getText(), telefonoField.getText(), passwordField.getText(), rolField.getText());
-                bl.agregarTecnico(tecnico);
-                JOptionPane.showMessageDialog(frame, "Técnico agregado exitosamente!");
-            }
+        agregarTecnicoButton.addActionListener(e -> {
+            Tecnico tecnico = new Tecnico(codigoField.getText(), nombreField.getText(), primerApellidoField.getText(), segundoApellidoField.getText(), correoField.getText(), telefonoField.getText(), passwordField.getText(), rolField.getText());
+            bl.agregarTecnico(tecnico);
+            JOptionPane.showMessageDialog(frame, "Técnico agregado exitosamente!");
+            limpiarCampos(codigoField, nombreField, primerApellidoField, segundoApellidoField, correoField, telefonoField, passwordField, departamentoField, rolField);
         });
 
         // Acción para agregar Administrador
-        agregarAdminButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Aquí puedes agregar la lógica para agregar un administrador
-                JOptionPane.showMessageDialog(frame, "Administrador agregado exitosamente!");
-            }
+        agregarAdminButton.addActionListener(e -> {
+            boolean estado = true; // Set to true for active
+            Administrador admin = new Administrador(codigoField.getText(), nombreField.getText(), primerApellidoField.getText(), segundoApellidoField.getText(), correoField.getText(), telefonoField.getText(), passwordField.getText(), estado);
+            bl.agregarAdministrador(admin);
+            JOptionPane.showMessageDialog(frame, "Administrador agregado exitosamente!");
+            limpiarCampos(codigoField, nombreField, primerApellidoField, segundoApellidoField, correoField, telefonoField, passwordField, departamentoField, rolField);
         });
 
+        // Hacer visible el marco
         frame.setVisible(true);
+    }
+
+    // Método para limpiar campos
+    private static void limpiarCampos(JTextField... campos) {
+        for (JTextField campo : campos) {
+            campo.setText("");
+        }
     }
 }

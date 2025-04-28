@@ -24,5 +24,5 @@ public class BL {
         administradores.add(administrador);
     }
 
-    // Métodos para listar, modificar y borrar usuarios
+    // Additional methods for listing, modifying, and deleting users can be added here
 }
